@@ -7,6 +7,7 @@ import BillsUI from "../views/BillsUI.js"
 import { bills } from "../fixtures/bills.js"
 import { ROUTES_PATH } from "../constants/routes.js";
 import { localStorageMock } from "../__mocks__/localStorage.js";
+import {handleClickNewBill} from "../containers/Bills.js"
 
 import router from "../app/Router.js";
 
@@ -36,8 +37,6 @@ describe("Given I am connected as an employee", () => {
       const datesSorted = [...dates].sort(antiChrono)
       expect(dates).toEqual(datesSorted)
     })
-
     // I test if the buttonNewClick is handled then I test the handleClickNewBill function
-    
   })
 })
