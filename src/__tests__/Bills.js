@@ -8,8 +8,15 @@ import userEvent from "@testing-library/user-event";
 import { bills } from "../fixtures/bills.js"
 import { ROUTES, ROUTES_PATH } from "../constants/routes.js";
 import { localStorageMock } from "../__mocks__/localStorage.js";
+<<<<<<< HEAD
+<<<<<<< HEAD
 import {mockedStore, mockedBills} from "../__mocks__/store";
 import Bills from "../containers/Bills.js"
+=======
+=======
+>>>>>>> parent of 5032a28 (test)
+
+>>>>>>> parent of 5032a28 (test)
 import router from "../app/Router.js";
 
 jest.mock("../app/store", () => mockedStore);
@@ -44,6 +51,8 @@ describe("Given I am connected as an employee", () => {
       const datesSorted = [...dates].sort(antiChrono)
       expect(dates).toEqual(datesSorted)
     })
+<<<<<<< HEAD
+<<<<<<< HEAD
     // I test if the buttonNewClick is handled the I test the handleClickNewBill function
 
     test("the it should open a modal", () => {
@@ -62,6 +71,16 @@ describe("Given I am connected as an employee", () => {
       buttonNewBill.click()
       expect(handleClickNewBill).toHaveBeenCalled()
     })
+=======
+
+    // I test if the buttonNewClick is handled then I test the handleClickNewBill function
+    
+>>>>>>> parent of 5032a28 (test)
+=======
+
+    // I test if the buttonNewClick is handled then I test the handleClickNewBill function
+    
+>>>>>>> parent of 5032a28 (test)
   })
 
   describe("When I click on one eye icon", () => {
