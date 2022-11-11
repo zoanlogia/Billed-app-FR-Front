@@ -11,9 +11,12 @@ import { localStorageMock } from "../__mocks__/localStorage.js";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import {mockedStore, mockedBills} from "../__mocks__/store";
 import Bills from "../containers/Bills.js"
 =======
+=======
+>>>>>>> parent of 5032a28 (test)
 =======
 >>>>>>> parent of 5032a28 (test)
 =======
@@ -57,6 +60,7 @@ describe("Given I am connected as an employee", () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     // I test if the buttonNewClick is handled the I test the handleClickNewBill function
 
     test("the it should open a modal", () => {
@@ -75,6 +79,11 @@ describe("Given I am connected as an employee", () => {
       buttonNewBill.click()
       expect(handleClickNewBill).toHaveBeenCalled()
     })
+=======
+
+    // I test if the buttonNewClick is handled then I test the handleClickNewBill function
+    
+>>>>>>> parent of 5032a28 (test)
 =======
 
     // I test if the buttonNewClick is handled then I test the handleClickNewBill function
