@@ -20,16 +20,10 @@ export default class NewBill {
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length-1]
-    const extensions = ['jpg', 'jpeg', 'png']
     const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
-    // form data accept extension file
+    formData.append('file', file)
     formData.append('email', email)
-    if (extensions.includes(fileName.split('.')[1])) {
-      formData.append("file", file)
-    } else {
-      alert("L'extension du fichier n'est pas valide")
-    }
 
     this.store
       .bills()
@@ -44,7 +38,6 @@ export default class NewBill {
         this.billId = key
         this.fileUrl = fileUrl
         this.fileName = fileName
-        console.log(this.fileName);
       }).catch(error => console.error(error))
   }
   handleSubmit = e => {

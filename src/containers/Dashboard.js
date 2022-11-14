@@ -8,13 +8,11 @@ import Logout from "./Logout.js"
 export const filteredBills = (data, status) => {
   return (data && data.length) ?
     data.filter(bill => {
-      
       let selectCondition
 
       // in jest environment
       if (typeof jest !== 'undefined') {
         selectCondition = (bill.status === status)
-        console.log('jest', selectCondition);
       }
       /* istanbul ignore next */
       else {
@@ -35,7 +33,6 @@ export const card = (bill) => {
     firstAndLastNames.split('.')[0] : ''
   const lastName = firstAndLastNames.includes('.') ?
   firstAndLastNames.split('.')[1] : firstAndLastNames
-  
 
   return (`
     <div class='bill-card' id='open-bill${bill.id}' data-testid='open-bill${bill.id}'>
@@ -56,9 +53,7 @@ export const card = (bill) => {
 }
 
 export const cards = (bills) => {
-  // display bills in reverse from the earliest to the latest
-  return bills.reverse().map(bill => card(bill)).join('')
-  // return bills && bills.length ? bills.map(bill => card(bill)).join("") : ""
+  return bills && bills.length ? bills.map(bill => card(bill)).join("") : ""
 }
 
 export const getStatus = (index) => {
@@ -103,10 +98,7 @@ export default class {
       this.counter ++
     } else {
       $(`#open-bill${bill.id}`).css({ background: '#0D5AE5' })
-      bills.forEach(b => {
-        $(`#open-bill${b.id}`).css({ background: '#0D5AE5' })
-      })
-      $(`#open-bill${bill.id}`).css({ background: '#2A2B35' })
+
       $('.dashboard-right-container div').html(`
         <div id="big-billed-icon" data-testid="big-billed-icon"> ${BigBilledIcon} </div>
       `)
@@ -148,13 +140,15 @@ export default class {
       this.counter ++
     } else {
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(90deg)'})
-      $(`#status-bills-container${this.index}`).html("")
+      $(`#status-bills-container${this.index}`)
+        .html("")
       this.counter ++
     }
 
     bills.forEach(bill => {
       $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })
+
     return bills
 
   }
