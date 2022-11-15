@@ -19,10 +19,10 @@ const row = (bill) => {
     `)
   }
 
-const rows = (data) => {
-  // display bills from the earliest to the latest
-  return (data && data.length) ? data.sort((a, b) => a.date < b.date ? 1 : -1).map(bill => row(bill)).join("") : ""
-}
+  const rows = (data) => {
+    // display bills from the earliest to the latest
+    return (data && data.length) ? data.sort((a, b) => a.date < b.date ? 1 : -1).map(bill => row(bill)).join("") : ""
+  }
 
 export default ({ data: bills, loading, error }) => {
   
