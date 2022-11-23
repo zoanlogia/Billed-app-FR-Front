@@ -19,12 +19,18 @@ export default class NewBill {
     e.preventDefault()
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
     const filePath = e.target.value.split(/\\/g)
+    // on empeche l'utilisateur de charger un fichier qui n'est pas une image
     const fileName = filePath[filePath.length-1]
     const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
     formData.append('email', email)
-
+    const fileExtension = fileName.split('.')[1]
+    if (!(fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png')) {
+      alert('Le fichier doit être une image')
+      // on reset le champ file
+      this.document.querySelector(`input[data-testid="file"]`).value = ''
+    }
     this.store
       .bills()
       .create({
