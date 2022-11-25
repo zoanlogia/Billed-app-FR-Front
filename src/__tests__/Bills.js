@@ -9,6 +9,7 @@ import { ROUTES, ROUTES_PATH } from "../constants/routes.js";
 import { localStorageMock } from "../__mocks__/localStorage.js";
 import { mockedBills} from "../__mocks__/store";
 import userEvent from "@testing-library/user-event";
+import { fireEvent } from "@testing-library/dom";
 
 import router from "../app/Router.js";
 import Bills from "../containers/Bills.js";
@@ -17,20 +18,20 @@ describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
     test("Then bill icon in vertical layout should be highlighted", async () => {
 
-      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
-      window.localStorage.setItem('user', JSON.stringify({
-        type: 'Employee'
-      }))
-      const root = document.createElement("div")
-      root.setAttribute("id", "root")
-      document.body.append(root)
-      router()
-      window.onNavigate(ROUTES_PATH.Bills)
-      await waitFor(() => screen.getByTestId('icon-window'))
-      const windowIcon = screen.getByTestId('icon-window')
-      //to-do write expect expression
-      expect(windowIcon.classList.contains('active-icon')).toBeTruthy()
-    })
+        Object.defineProperty(window, 'localStorage', { value: localStorageMock });
+        window.localStorage.setItem('user', JSON.stringify({
+          type: 'Employee'
+        }));
+        const root = document.createElement("div");
+        root.setAttribute("id", "root");
+        document.body.append(root);
+        router();
+        window.onNavigate(ROUTES_PATH.Bills);
+        await waitFor(() => screen.getByTestId('icon-window'));
+        const windowIcon = screen.getByTestId('icon-window');
+        //to-do write expect expression
+        expect(windowIcon.classList.contains('active-icon')).toBeTruthy();
+      })
 
     test("the bills should be ordered from earliest to latest", () => {
       document.body.innerHTML = BillsUI({ data: bills })
@@ -58,8 +59,8 @@ describe("Given I am connected as an employee", () => {
     })
   })
 
-  describe("When I click on one eye icon", () => {
-    test(" a modal should open", async () => {
+  describe("When I click on the one eye icon", () => {
+    test("A modal should open", () => {
       const onNavigate = pathname => {
         document.body.innerHTML = ROUTES({ pathname });
       };
@@ -95,6 +96,26 @@ describe("Given I am connected as an employee", () => {
         expect(modale.classList.contains("show")).toBeTruthy();
       });
     });
+  })
+
+    describe("When I click on new bill button ", () => {
+      test("Then a modal should open", () => {
+        document.body.innerHTML = BillsUI({data: bills,});
+        const onNavigate = (pathname) => {document.body.innerHTML = ROUTES({ pathname, }); };
+        const newBill = new Bills({ document, onNavigate, store: null, bills, localStorage: localStorageMock})          
+        const handleClickNewBill = jest.fn((e) => newBill.handleClickNewBill(e, bills)) 
+        const iconNewBill = screen.getByTestId("btn-new-bill");
+        iconNewBill.addEventListener("click", handleClickNewBill);
+        fireEvent.click(iconNewBill);
+        /* vérification de l'appel de la fonction handleClickNewBill */
+        expect(handleClickNewBill).toHaveBeenCalled();
+         /* vérification de l'affichage de la modale par la présence du noeud DOM
+         id="form-new-bill") */
+        const modale = screen.getAllByTestId("form-new-bill");
+        expect(modale).toBeTruthy();
+      })
+    })
+
 
     describe("When I went on Bills page and it is loading", () => {
       test(" Loading page should be rendered", () => {
@@ -108,6 +129,24 @@ describe("Given I am connected as an employee", () => {
         expect(screen.getAllByText("Erreur")).toBeTruthy();
         document.body.innerHTML = "";
       })
+      
+      test("fetches bills from mock API GET", async () => {
+        Object.defineProperty(window, 'localStorage', { value: localStorageMock });
+        window.localStorage.setItem('user', JSON.stringify({
+          type: 'Employee'
+        }));
+        const root = document.createElement("div");
+        root.setAttribute("id", "root");
+        document.body.append(root);
+        router()
+        window.onNavigate(ROUTES_PATH.Bills)
+        const onNavigate = (pathname) => {document.body.innerHTML = ROUTES({ pathname })}
+        const billsList = new Bills({document, onNavigate, store : mockedBills, localStorage: null})
+        const bills = await billsList.getBills()
+        document.body.innerHTML = BillsUI({ data: bills })
+        const billsCount  = await screen.getByTestId("tbody").childElementCount
+        /* Vérification si les 4 bills du mock sont récupérées*/
+        expect(billsCount).toEqual(4)
+      })
     });
-  })
 })
