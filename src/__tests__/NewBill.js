@@ -16,7 +16,7 @@ describe("Given I am connected as an employee", () => {
       const html = NewBillUI()
       document.body.innerHTML = html
     })
-    test("Si le form apparait", async () => {
+    it("should display the form", async () => {
       window.localStorage.setItem('user', JSON.stringify({
         type: 'Employee'
       }));
