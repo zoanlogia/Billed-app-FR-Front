@@ -4,7 +4,7 @@
     "live": "live-server"
   },
   "jest": {
-    "verbose": false,
+    "verbose": true,
     "setupFiles": [
       "./setup-jest.js"
     ],
@@ -21,7 +21,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "global": "^4.4.0",
-    "jquery": "^3.5.1",
+    "jquery": "^3.6.1",
     "live-server": "^1.2.2",
     "path": "^0.12.7"
   },
