@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { screen } from "@testing-library/dom"
+import { screen, waitFor } from "@testing-library/dom"
 import NewBillUI from "../views/NewBillUI.js"
 import NewBill from "../containers/NewBill.js"
 import { ROUTES } from "../constants/routes"
@@ -12,7 +12,7 @@ jest.mock("../app/store", () => mockStore)
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on NewBill Page", () => {
-    test("Then it should display the new bill page", () => {
+    it("Then it should display the new bill page", () => {
       const html = NewBillUI()
       document.body.innerHTML = html
     })
@@ -28,7 +28,7 @@ describe("Given I am connected as an employee", () => {
   })
 
   describe("When I am on NewBill Page and I submit the form", () => {
-    test("Then it should create a new bill", () => {
+    it("Then it should create a new bill", () => {
       window.localStorage.setItem('user', JSON.stringify({
         type: 'Employee'
       }));
@@ -50,7 +50,7 @@ describe("Given I am connected as an employee", () => {
   })
 
   describe("When I am on NewBill Page and I submit the form", () => {
-    test("the extensions allowed for the input type file should be png, jpeg or jpg only", () => {
+    it("the extensions allowed for the input type file should be png, jpeg or jpg only", () => {
       window.localStorage.setItem('user', JSON.stringify({
         type: 'Employee'
       }));
@@ -63,11 +63,14 @@ describe("Given I am connected as an employee", () => {
       const newBill = new NewBill({
         document, onNavigate, firestore, store: mockStore, localStorage: window.localStorage
       })
+      window.alert = jest.fn()
       const file = screen.getByTestId('file')
       const handleChangeFile = jest.fn(newBill.handleChangeFile)
       file.addEventListener('change', handleChangeFile)
-      file.change()
+      file.value = ''
+      file.dispatchEvent(new Event('change'))
       expect(handleChangeFile).toHaveBeenCalled()
+      window.alert.mockClear()
     })
   })
 })

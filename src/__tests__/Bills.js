@@ -17,7 +17,7 @@ jest.mock("../app/store", () => mockStore)
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
-    test("Then bill icon in vertical layout should be highlighted", async () => {
+    it("Then bill icon in vertical layout should be highlighted", async () => {
 
       Object.defineProperty(window, 'localStorage', {
         value: localStorageMock
@@ -38,7 +38,7 @@ describe("Given I am connected as an employee", () => {
       expect(windowIcon.classList.contains('active-icon')).toBeTruthy()
     })
 
-    test("Then bills should be ordered from earliest to latest", () => {
+    it("Then bills should be ordered from earliest to latest", () => {
       document.body.innerHTML = BillsUI({ data: bills })
       const dates = screen
         .getAllByText(/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i)
@@ -49,7 +49,7 @@ describe("Given I am connected as an employee", () => {
       expect(dates).toEqual(datesSorted)
     })
 
-    test("I can click on new bill button and navigate to new Bill page", () => {
+    it("I can click on new bill button and navigate to new Bill page", () => {
 
       //on fabrique la page (<div>...</div>)
       document.body.innerHTML = BillsUI({
@@ -79,7 +79,7 @@ describe("Given I am connected as an employee", () => {
     });
     describe("When i click on one icon eye", () => {
       //async?
-      test("An event should occur and a modal should open", () => {
+      it("An event should occur and a modal should open", () => {
   
         // création d'un DOM virtuel + son controller    
         const onNavigate = (pathname) => { document.body.innerHTML = ROUTES({ pathname }) }
@@ -110,7 +110,7 @@ describe("Given I am connected as an employee", () => {
 // test d'intégration GET
 describe("Given I am a user connected as Employee", () => {
   describe("When I navigate to Bills page once i am connected", () => {
-    test("fetches bills from mock API GET", async () => {
+    it("fetches bills from mock API GET", async () => {
       localStorage.setItem("user", JSON.stringify({ type: "Employee", email: "a@a" }));
       const root = document.createElement("div")
       root.setAttribute("id", "root")
@@ -142,7 +142,7 @@ describe("Given I am a user connected as Employee", () => {
       })
 
       // erreur 404
-      test("fetches bills from an API and fails with 404 message error", async () => {
+      it("fetches bills from an API and fails with 404 message error", async () => {
 
         mockStore.bills.mockImplementationOnce(() => {
           return {
@@ -158,7 +158,7 @@ describe("Given I am a user connected as Employee", () => {
       })
 
       // erreur 500
-      test("fetches messages from an API and fails with 500 message error", async () => {
+      it("fetches messages from an API and fails with 500 message error", async () => {
 
         mockStore.bills.mockImplementationOnce(() => {
           return {

@@ -28,7 +28,7 @@ const bills = [{
 
 describe('Given I am connected', () => {
   describe('When I click on disconnect button', () => {
-    test(('Then, I should be sent to login page'), () => {
+    it(('Then, I should be sent to login page'), () => {
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname })
       }

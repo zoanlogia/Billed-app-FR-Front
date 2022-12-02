@@ -4,7 +4,7 @@
     "live": "live-server"
   },
   "jest": {
-    "verbose": true,
+    "verbose": false,
     "setupFiles": [
       "./setup-jest.js"
     ],
